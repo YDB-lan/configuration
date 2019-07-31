@@ -1,0 +1,2 @@
+# configuration
+Full automatic configuration
