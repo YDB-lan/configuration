@@ -1,0 +1,122 @@
+对外提供功能
+提供对内存中配置的实例化操作
+对具体实例的设置和读取
+对配置文件的读写
+包含API、启动、数据存储、网络连接、挖矿、钱包、心跳相关配置
+▼ package
+    config
+
+▶ imports
+
+▼ variables
+    // 对特定参数的合法性校验规则集合
+    // 1 目前只是限定昵称为字符
+   +Validators
+
+▼+APIConfig : struct
+    [fields]
+    // 是否允许跨域请求
+   +AccessControlAllowCredentials : bool
+    // 允许的方法列表
+   +AccessControlAllowMethods : []string
+    // 允许的元列表
+   +AccessControlAllowOrigin : []string
+    // 地址
+   +Address : string
+    [functions]
+    // 实例化APIconfig
+   -newDefaultAPIConfig() : *APIConfig
+
+▼+BootstrapConfig : struct
+    [fields]
+    // 启动地址集合
+   +Addresses : []string
+    // 最小节点阈值
+   +MinPeerThreshold : int
+    // 启动时间阈值，目前为10s
+   +Period : string
+    [functions]
+    //　实例化启动配置的接口
+   -newDefaultBootstrapConfig() : *BootstrapConfig
+
+    // 存储在内存之中的filecoin配置
+▼+Config : struct
+    [fields]
+    // API相关
+   +API : *APIConfig
+    // 启动相关
+   +Bootstrap : *BootstrapConfig
+    // 数据存储相关
+   +Datastore : *DatastoreConfig
+    // 心跳相关
+   +Heartbeat : *HeartbeatConfig
+    // 挖矿相关
+   +Mining : *MiningConfig
+    // 网络连接相关
+   +Swarm : *SwarmConfig
+    // 钱包相关
+   +Wallet : *WalletConfig
+    [methods]
+    // 获取配置，参数为API的上述子结构
+   
+    // 写对应目录的配置文件
+   
+    [functions]
+    // 实例化配置，会调用各字节口的实例化
+   +NewDefaultConfig() : *Config
+    // 读对应目录的配置文件
+   +ReadFile(file string) : *Config, error
+
+▼+DatastoreConfig : struct
+    [fields]
+    // 路径
+   +Path : string
+    // 类型
+   +Type : string
+    [functions]
+   -newDefaultDatastoreConfig() : *DatastoreConfig
+
+▼+HeartbeatConfig : struct
+    [fields]
+    // 心跳周期
+   +BeatPeriod : string
+    // 心跳目标
+   +BeatTarget : string
+    // 昵称
+   +Nickname : string
+    // 重连时间
+   +ReconnectPeriod : string
+    [functions]
+   -newDefaultHeartbeatConfig() : *HeartbeatConfig
+
+▼+MiningConfig : struct
+    [fields]
+    // 自动密封间隔周期
+   +AutoSealIntervalSeconds : uint
+    // 区块签名地址
+   +BlockSignerAddress : address.Address
+    // 矿工地址
+   +MinerAddress : address.Address
+    // 存储报价
+   +StoragePrice : *types.AttoFIL
+    [functions]
+   -newDefaultMiningConfig() : *MiningConfig
+
+▼+SwarmConfig : struct
+    [fields]
+    // 地址
+   +Address : string
+    // 转发地址
+   +PublicRelayAddress : string
+    [functions]
+   -newDefaultSwarmConfig() : *SwarmConfig
+
+▼+WalletConfig : struct
+    [fields]
+    // 默认钱包地址
+   +DefaultAddress : address.Address
+    [functions]
+   -newDefaultWalletConfig() : *WalletConfig
+
+▼ functions
+   -validateLettersOnly(key string, value string)
